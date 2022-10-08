@@ -1,2 +1,2 @@
 # Software_installation
-Scrpits used to install software 
+Scripts used to install software 
