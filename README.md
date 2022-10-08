@@ -1,2 +1,2 @@
-# Script
-Collection of scripts used in Master of Science (Bioinformatics) UiTM
+# Software_installation
+Scrpits used to install software 
