@@ -1,0 +1,1000 @@
+ 1008  gmx trjconv -f em-steep.trr -s em-steep.tpr -o em-ctr.gro -center -pbc mol -ur compact
+ 1009  gmx trjconv -s em-steep.tpr -f em-ctr.gro -o em-nj.gro -pbc nojump
+ 1010  gmx make_ndx -f em-nj.gro -o index.ndx
+ 1011  gmx grompp -f nvt.mdp -c em-nj.gro -r em-nj.gro -p topol.top -n index.ndx -o nvt.tpr
+ 1012  gmx mdrun -v -deffnm nvt
+ 1013  gmx grompp -f npt-1.mdp -c nvt.gro -t nvt.cpt -r nvt.gro -p topol.top -n index.ndx -o npt-1.tpr
+ 1014  gmx mdrun -v -deffnm npt-1
+ 1015  gmx grompp -f md_50.mdp -c npt-1.gro -t npt-1.cpt -p topol.top -n index.ndx -o md_50.tpr
+ 1016  gmx mdrun -v -deffnm md_50
+ 1017  gmx make_ndx -f em-nj.gro -o chain_a.ndx
+ 1018  gmx trjconv -f md_50.xtc -s md_50.tpr -o md_50-n.xtc -center -pbc mol -ur compact -n chain_a.ndx
+ 1019  gmx rms -s md_50.tpr -f md_50-n.xtc -o rmsd-1076-npt-1.xvg -tu ns
+ 1020  gmx trjconv -s md_50.tpr -f md_50-n.xtc -o 0ns.pdb -dump 0
+ 1021  gmx trjconv -s md_50.tpr -f md_50-n.xtc -o 50ns.pdb -dump 50000
+ 1022  gmx convert-tpr -s md_50.tpr -extend 50000 -o md_100.tpr
+ 1023  gmx mdrun -v -deffnm md_100 -cpi md_50.cpt -noappend
+ 1024  l
+ 1025  gmx trjcat -f md_50.xtc md_100.part0002.xtc -o md_50_100.xtc
+ 1026  gmx trjconv -f md_50_100.xtc -s md_100.tpr -o md_100-n.xtc -center -pbc mol -ur compact -n chain_a.ndx
+ 1027  gmx rms -s md_100.tpr -f md_100-n.xtc -o rmsd_1076-npt1-100ns.xvg -tu ns
+ 1028  gmx trjconv -s md_100.tpr -f md_100-n.xtc -o 100ns.pdb -dump 100000
+ 1029  cd gmx_amber/md_ub75/hbond/
+ 1030  xmgrace hbond-755.xvg 
+ 1031  xmgrace hbond-1536.xvg hbond-755.xvg hbond-1076.xvg 
+ 1032  xmgrace hbond-1536.xvg
+ 1033  xmgrace hbond-1076.xvg 
+ 1034  xmgrace hbond-755.xvg 
+ 1035  vmd
+ 1036  cd gmx_amber/md_ub75/hbond/
+ 1037  l
+ 1038  xmgrace hbond-1536c91.xvg 
+ 1039  xmgrace hbond-755c91.xvg 
+ 1040  xmgrace hbond-1536h169.xvg 
+ 1041  vmd
+ 1042  cd ..
+ 1043  cd Downloads/
+ 1044  l
+ 1045  sudo chmod a+x BIOVIA_2021.DS2021Client.bin 
+ 1046  ./BIOVIA_2021.DS2021Client.bin 
+ 1047  cd Downloads/
+ 1048  l
+ 1049  ./BIOVIA_2021.DS2021Client.bin 
+ 1050  l
+ 1051  chmod +x BIOVIA_2021.DS2021Client.bin 
+ 1052  ./BIOVIA_2021.DS2021Client.bin --noexec --target /home/username/progs/BIOVIA2021
+ 1053  sudo ./BIOVIA_2021.DS2021Client.bin --noexec --target /home/username/progs/BIOVIA2021
+ 1054  cd /home/username/progs/BIOVIA2021
+ 1055  l
+ 1056  cd /home/username/progs/BIOVIA2021
+ 1057  sudo cd /home/username/progs/BIOVIA2021
+ 1058  sudo ./BIOVIA_2021.DS2021Client.bin --noexec --target /home/md1uitm/progs/BIOVIA2021
+ 1059  ./BIOVIA_2021.DS2021Client.bin --noexec --target /home/md1uitm/programs/BIOVIA2021
+ 1060  cd ..
+ 1061  cd programs/
+ 1062  l
+ 1063  cd BIOVIA2021/
+ 1064  l
+ 1065  chmod +x install_DSClient.sh 
+ 1066  ./install_DSClient.sh 
+ 1067  l
+ 1068  ./install_DSClient.sh 
+ 1069  clear
+ 1070  cd gmx_amber/md_ub75/rmsd/
+ 1071  l
+ 1072  xmgrace rmsd_1536-npt1-100ns.xvg rmsd_755-npt1-100ns.xvg rmsd_1076-npt1-100ns.xvg 
+ 1073  grace -nxy rmsd_1076-npt1-100ns.xvg -hdevice PNG -hardcopy -printfile rmsd_inhibitorsfda.png
+ 1074  cd ..
+ 1075  cd bap1n-tc10_fda755-npt-1/
+ 1076  l
+ 1077  gmx hbond -f md_100-n.xtc -s md_100.tpr -num hbond-755.xvg
+ 1078  source /usr/local/gromacs/bin/GMXRC
+ 1079  gmx hbond -f md_100-n.xtc -s md_100.tpr -num hbond-755.xvg
+ 1080  gmx hbond -f md_100-n.xtc -s md_100.tpr -num hbond-755.xvg -tu ns
+ 1081  cd ..
+ 1082  cd bap1n-tc10_fda1536-npt-1/
+ 1083  l
+ 1084  gmx hbond -f md_100-n.xtc -s md_100.tpr -num hbond-1536.xvg -tu ns
+ 1085  cd ..
+ 1086  cd bap1n-tc10_fda1076npt-1/
+ 1087  gmx hbond -f md_100-n.xtc -s md_100.tpr -num hbond-1076.xvg -tu ns
+ 1088  cd ..
+ 1089  cd bap1n-tc10_fda1536-npt-1/
+ 1090  gmx trjconv -s md_100.tpr -f md_100-n.xtc -o md_100-n.gro -dump 0
+ 1091  gmx make_ndx -f em-nj.gro -o cys91.ndx
+ 1092  gmx make_ndx -f em-nj.gro -o his169.ndx
+ 1093  gmx hbond -f md_100-n.xtc -s md_100.tpr -num hbond-1536c91.xvg -tu ns -n cys91.ndx 
+ 1094  cd ..
+ 1095  cd bap1n-tc10_fda755-npt-1/
+ 1096  gmx make_ndx -f em-nj.gro -o cys91.ndx
+ 1097  gmx hbond -f md_100-n.xtc -s md_100.tpr -num hbond-755c91.xvg -tu ns -n cys91.ndx 
+ 1098  gmx make_ndx -f em-nj.gro -o his169.ndx
+ 1099  gmx hbond -f md_100-n.xtc -s md_100.tpr -num hbond-755h169.xvg -tu ns -n his169.ndx 
+ 1100  cd ..
+ 1101  cd bap1n-tc10_fda1536-npt-1/
+ 1102  gmx hbond -f md_100-n.xtc -s md_100.tpr -num hbond-1536h169.xvg -tu ns -n his169.ndx 
+ 1103  l
+ 1104  gmx trjconv -f md_100.part0002.xtc -s md_100.tpr -o md_50to100-n.xtc -center -pbc mol -ur compact -n chain_a.ndx
+ 1105  l
+ 1106  gmx trjconv -s md_100.tpr -f md_50to100-n.xtc -o md_50to100-n.gro -dump 0
+ 1107  histoty
+ 1108  history
+ 1109  cd Downloads/
+ 1110  chmod +x BIOVIA_2021.DS2021Client.bin 
+ 1111  ./BIOVIA_2021.DS2021Client.bin --noexec --target /home/md1uitm/programs/BIOVIA2021
+ 1112  cd ..
+ 1113  cd programs/BIOVIA2021/
+ 1114  l
+ 1115  chmod +x install_DSClient.sh 
+ 1116  ./install_DSClient.sh 
+ 1117  cd Downloads/
+ 1118  cd ..
+ 1119  cd Downloads/
+ 1120  chmod +x BIOVIA_2021.DS2021Client.bin 
+ 1121  ./BIOVIA_2021.DS2021Client.bin --noexec --target /home/md1uitm/programs/BIOVIA2021
+ 1122  cd programs/BIOVIA2021/
+ 1123  cd ..
+ 1124  cd programs/BIOVIA2021/
+ 1125  chmod +x install_DSClient.sh 
+ 1126  ./install_DSClient.sh 
+ 1127  cd ..
+ 1128  cd Downloads/
+ 1129  chmod a+x BIOVIA_2021.DS2021Client.bin 
+ 1130  ./BIOVIA_2021.DS2021Client.bin 
+ 1131  cd ..
+ 1132  discovery studio
+ 1133  biovia
+ 1134  biovia discobery studio
+ 1135  history
+ 1136  cd gmx_amber/md_ub75/bap1n-tc10_fda1065npt-1/
+ 1137  l
+ 1138  source /usr/local/gromacs/bin/GMXRC
+ 1139  antechamber -i fda1065-ex.mol2 -o fda.mol2 -fi mol2 -fo mol2 -c bcc
+ 1140  antechamber -i fda1065-t.mol2 -o fda.mol2 -fi mol2 -fo mol2 -c bcc
+ 1141  l
+ 1142  antechamber -i fda1065-t.mol2 -o fda.mol2 -fi mol2 -fo mol2 -c bcc
+ 1143  acpype -di fda.mol2 -c bcc
+ 1144  gmx pdb2gmx -f tc10_remove-tail-LRG.pdb -o pro.gro -ignh
+ 1145  gmx editconf -f fda_NEW.pdb -o fda.gro
+ 1146  gmx editconf -f cpx.gro -o box.gro -bt dodecahedron -d 1.0
+ 1147  gmx solvate -cp box.gro -cs spc216.gro -p topol.top -o sol.gro
+ 1148  gmx editconf -f cpx.gro -o box.gro -bt dodecahedron -d 1.0
+ 1149  gmx solvate -cp box.gro -cs spc216.gro -p topol.top -o sol.gro
+ 1150  gmx grompp -f ions.mdp -c sol.gro -p topol.top -o ions.tpr -maxwarn 1
+ 1151  gmx genion -s ions.tpr -o ions.gro -p topol.top -pname NA -nname CL -neutral
+ 1152  gmx grompp -f em-steep.mdp -c ions.gro -p topol.top -o em-steep.tpr
+ 1153  gmx mdrun -v -deffnm em-steep
+ 1154  gmx make_ndx -f fda.gro -o fda.ndx
+ 1155  gmx genrestr -f fda.gro -n fda.ndx -o posre_fda.itp -fc 1000 1000 1000
+ 1156  gmx trjconv -f em-steep.trr -s em-steep.tpr -o em-ctr.gro -center -pbc mol -ur compact
+ 1157  gmx trjconv -s em-steep.tpr -f em-ctr.gro -o em-nj.gro -pbc nojump
+ 1158  gmx make_ndx -f em-nj.gro -o index.ndx
+ 1159  gmx grompp -f nvt.mdp -c em-nj.gro -r em-nj.gro -p topol.top -n index.ndx -o nvt.tpr
+ 1160  gmx mdrun -v -deffnm nvt
+ 1161  gmx grompp -f npt-1.mdp -c nvt.gro -t nvt.cpt -r nvt.gro -p topol.top -n index.ndx -o npt-1.tpr
+ 1162  gmx mdrun -v -deffnm npt-1
+ 1163  gmx grompp -f md_50.mdp -c npt-1.gro -t npt-1.cpt -p topol.top -n index.ndx -o md_50.tpr
+ 1164  gmx mdrun -v -deffnm md_50
+ 1165  cd gmx_amber/md_ub75/bap1n-tc10_fda1065npt-1/
+ 1166  xmgrace potential.xvg 
+ 1167  xmgrace temp.xvg 
+ 1168  xmgrace pressure.xvg 
+ 1169  cd gmx_amber/md_ub75/bap1n-tc10_fda1065npt-1/
+ 1170  l
+ 1171  gmx pdb2gmx -f tc10_remove-tail-LRG.pdb -o pro.gro -ignh
+ 1172  source /usr/local/gromacs/bin/GMXRC
+ 1173  gmx pdb2gmx -f tc10_remove-tail-LRG.pdb -o pro.gro -ignh
+ 1174  antechamber -i fda1065-t.mol2 -o fda.mol2 -fi mol2 -fo mol2 -c bcc
+ 1175  acpype -di fda.mol2 -c bcc
+ 1176  gmx editconf -f fda_NEW.pdb -o fda.gro
+ 1177  gmx editconf -f cpx.gro -o box.gro -bt dodecahedron -d 1.0
+ 1178  gmx solvate -cp box.gro -cs spc216.gro -p topol.top -o sol.gro
+ 1179  gmx grompp -f ions.mdp -c sol.gro -p topol.top -o ions.tpr -maxwarn 1
+ 1180  gmx genion -s ions.tpr -o ions.gro -p topol.top -pname NA -nname CL -neutral
+ 1181  gmx grompp -f em-steep.mdp -c ions.gro -p topol.top -o em-steep.tpr
+ 1182  gmx mdrun -v -deffnm em-steep
+ 1183  gmx energy -f em-steep.edr -o potential.xvg
+ 1184  gmx make_ndx -f fda.gro -o fda.ndx
+ 1185  gmx genrestr -f fda.gro -n fda.ndx -o posre_fda.itp -fc 1000 1000 1000
+ 1186  gmx make_ndx -f em-steep.gro -o index.ndx
+ 1187  gmx grompp -f nvt.mdp -c em-steep.gro -r em-steep.gro -p topol.top -n index.ndx -o nvt.tpr
+ 1188  gmx mdrun -v -deffnm nvt
+ 1189  gmx energy -f nvt.edr -o temp.xvg
+ 1190  gmx grompp -f npt-1.mdp -c nvt.gro -t nvt.cpt -r nvt.gro -p topol.top -n index.ndx -o npt-1.tpr
+ 1191  gmx mdrun -v -deffnm npt-1
+ 1192  gmx energy -f npt-1.edr -o pressure.xvg
+ 1193  gmx grompp -f md_50.mdp -c npt-1.gro -t npt-1.cpt -p topol.top -n index.ndx -o md_50.tpr
+ 1194  gmx mdrun -v -deffnm md_50
+ 1195  history
+ 1196  cd gmx_amber/md_ub75/bap1n-tc10_fda1065npt-1/
+ 1197  l
+ 1198  gmx grompp -f md_50.mdp -c npt-1.gro -t npt-1.cpt -p topol.top -n index.ndx -o md_50.tpr
+ 1199  source /usr/local/gromacs/bin/GMXRC
+ 1200  gmx grompp -f md_50.mdp -c npt-1.gro -t npt-1.cpt -p topol.top -n index.ndx -o md_50.tpr
+ 1201  gmx mdrun -v -deffnm md_50
+ 1202  cd gmx_amber/md_ub75/bap1n-tc10_fda1065npt-1/
+ 1203  l
+ 1204  source /usr/local/gromacs/bin/GMXRC
+ 1205  gmx grompp -f md_1.mdp -c em-steep.gro -p topol.top -o md_1.tpr
+ 1206  history
+ 1207  cd gmx_amber/md_ub75/bap1n-tc10_fda1065npt-1/
+ 1208  l
+ 1209  source /usr/local/gromacs/bin/GMXRC
+ 1210  antechamber -i fda1065-t.mol2 -o fda.mol2 -fi mol2 -fo mol2 -c bcc
+ 1211  acpype -di fda.mol2 -c bcc
+ 1212  gmx pdb2gmx -f tc10_remove-tail-LRG.pdb -o pro.gro -ignh
+ 1213  gmx editconf -f fda_NEW.pdb -o fda.gro
+ 1214  gmx editconf -f cpx.gro -o box.gro -c -d 1.0 -bt cubic
+ 1215  gmx solvate -cp box.gro -cs spc216.gro -p topol.top -o sol.gro
+ 1216  gmx grompp -f ions.mdp -c sol.gro -p topol.top -o ions.tpr -maxwarn 1
+ 1217  gmx solvate -cp box.gro -cs spc216.gro -p topol.top -o sol.gro
+ 1218  gmx grompp -f ions.mdp -c sol.gro -p topol.top -o ions.tpr -maxwarn 1
+ 1219  gmx genion -s ions.tpr -o ions.gro -p topol.top -pname NA -nname CL -neutral
+ 1220  gmx grompp -f em-steep.mdp -c ions.gro -p topol.top -o em-steep.tpr
+ 1221  gmx mdrun -v -deffnm em-steep
+ 1222  gmx make_ndx -f fda.gro -o fda.ndx
+ 1223  gmx genrestr -f fda.gro -n fda.ndx -o posre_fda.itp -fc 1000 1000 1000
+ 1224  gmx make_ndx -f em-steep.gro -o index.ndx
+ 1225  gmx grompp -f nvt.mdp -c em-steep.gro -r em-steep.gro -p topol.top -n index.ndx -o nvt.tpr
+ 1226  gmx mdrun -v -deffnm nvt
+ 1227  gmx energy -f nvt.edr -o temp.xvg
+ 1228  xmgrace temp.xvg 
+ 1229  gmx energy -f nvt.edr -o temp.xvg -tu ns
+ 1230  xmgrace temp.xvg 
+ 1231  gmx grompp -f npt-1.mdp -c nvt.gro -t nvt.cpt -r nvt.gro -p topol.top -n index.ndx -o npt-1.tpr
+ 1232  gmx mdrun -v -deffnm npt-1
+ 1233  gmx grompp -f npt-2.mdp -c npt-1.gro -t npt-1.cpt -r npt-1.gro -p topol.top -n index.ndx -o npt-2.tpr
+ 1234  gmx mdrun -v -deffnm npt-2
+ 1235  gmx grompp -f npt-3.mdp -c npt-2.gro -t npt-2.cpt -r npt-2.gro -p topol.top -n index.ndx -o npt-3.tpr
+ 1236  gmx mdrun -v -deffnm npt-3
+ 1237  gmx grompp -f npt-4.mdp -c npt-3.cd gmx_amber/md_ub75/bap1n-tc10_fda1065npt-1/
+ 1238  source /usr/local/gromacs/bin/GMXRC
+ 1239  gmx energy -f em-steep.edr -o potential.xvg
+ 1240  xmgrace potential.xvg 
+ 1241  cd gmx_amber/md_ub75/bap1n-tc10_fda1065npt-1/
+ 1242  l
+ 1243  antechamber -i fda1065-t.mol2 -o fda.mol2 -fi mol2 -fo mol2 -c bcc
+ 1244  acpype -di fda.mol2 -c bcc
+ 1245  gmx editconf -f fda_NEW.pdb -o fda.gro
+ 1246  clear
+ 1247  source /usr/local/gromacs/bin/GMXRC
+ 1248  gmx editconf -f fda_NEW.pdb -o fda.gro
+ 1249  gmx pdb2gmx -f tc10_remove-tail-LRG.pdb -o pro.gro -ignh
+ 1250  gmx editconf -f cpx.gro -o box.gro -bt dodecahedron -d 1.0
+ 1251  gmx solvate -cp box.gro -cs spc216.gro -p topol.top -o sol.gro
+ 1252  gmx grompp -f ions.mdp -c sol.gro -p topol.top -o ions.tpr -maxwarn 1
+ 1253  gmx genion -s ions.tpr -o ions.gro -p topol.top -pname NA -nname CL -neutral
+ 1254  gmx grompp -f em-cg.mdp -c ions.gro -p topol.top -o em-cg.tpr
+ 1255  gmx mdrun -v -deffnm em-cg
+ 1256  gmx grompp -f em-steep.mdp -c ions.gro -p topol.top -o em-steep.tpr
+ 1257  gmx mdrun -v -deffnm em-steep
+ 1258  gmx energy -f em-steep.edr -o poten.xvg
+ 1259  xmgrace poten.xvg 
+ 1260  gmx grompp -f em-cg.mdp -c em-steep.gro -p topol.top -o em-cg.tpr
+ 1261  gmx mdrun -v -deffnm em-cg
+ 1262  gmx grompp -f em-cg.mdp -c em-steep.gro -p topol.top -o em-cg.tpr
+ 1263  gmx mdrun -v -deffnm em-cg
+ 1264  gmx grompp -f em-cg.mdp -c em-steep.gro -p topol.top -o em-cg.tpr
+ 1265  gmx mdrun -v -deffnm em-cg
+ 1266  gmx energy -f em-cg.edr -o pot-cg.xvg
+ 1267  xmgrace pot-cg.xvg 
+ 1268  gmx grompp -f em-cg.mdp -c em-steep.gro -p topol.top -o em-cg.tpr
+ 1269  gmx mdrun -v -deffnm em-cg
+ 1270  gmx grompp -f em-cg.mdp -c em-steep.gro -p topol.top -o em-cg.tpr
+ 1271  gmx mdrun -v -deffnm em-cg
+ 1272  gmx energy -f em-cg.edr -o pot-cg.xvg
+ 1273  xmgrace pot-cg.xvg 
+ 1274  gmx make_ndx -f fda.gro -o fda.ndx
+ 1275  gmx genrestr -f fda.gro -n fda.ndx -o posre_fda.itp -fc 1000 1000 1000
+ 1276  gmx make_ndx -f em-cg.gro -o index.ndx
+ 1277  gmx grompp -f nvt.mdp -c em-cg.gro -r em-cg.gro -p topol.top -n index.ndx -o nvt.tpr
+ 1278  gmx mdrun -v -deffnm nvt
+ 1279  gmx grompp -f npt-1.mdp -c nvt.gro -t nvt.cpt -r nvt.gro -p topol.top -n index.ndx -o npt-1.tpr
+ 1280  gmx mdrun -v -deffnm npt-1
+ 1281  gmx grompp -f npt-4.mdp -c npt-1.gro -t npt-1.cpt -r npt-1.gro -p topol.top -n index.ndx -o npt-4.tpr
+ 1282  gmx mdrun -v -deffnm npt-4
+ 1283  gmx grompp -f npt-4.mdp -c npt-1.gro -t npt-1.cpt -r npt-1.gro -p topol.top -n index.ndx -o npt-4.tpr
+ 1284  gmx mdrun -v -deffnm npt-4
+ 1285  gmx grompp -f npt-4-2fs.mdp -c npt-1.gro -t npt-1.cpt -r npt-1.gro -p topol.top -n index.ndx -o npt-4-2fs.tpr
+ 1286  l
+ 1287  gmx grompp -f npt-4-2fs.mdp -c npt-1.gro -t npt-1.cpt -r npt-1.gro -p topol.top -n index.ndx -o npt-4-2fs.tpr
+ 1288  gmx mdrun -v -deffnm npt-4-2fs
+ 1289  gmx grompp -f md_50.mdp -c npt-4-2fs.gro -t npt-4-2fs.cpt -p topol.top -n index.ndx -o md_50.tpr
+ 1290  gmx mdrun -v -deffnm md_50
+ 1291  gmx grompp -f md_50.mdp -c npt-4-2fs.gro -t npt-4-2fs.cpt -p topol.top -n index.ndx -o md_50.tpr
+ 1292  gmx mdrun -v -deffnm md_50
+ 1293  antechamber -i fda1065-t.mol2 -o fda.mol2 -fi mol2 -fo mol2 -c bcc
+ 1294  antechamber -i 1065.mol2 -o fda.mol2 -fi mol2 -fo mol2 -c bcc
+ 1295  acpype -di fda.mol2 -c bcc
+ 1296  l
+ 1297  cd..
+ 1298  cd ..
+ 1299  cd gmx_amber/md_ub75/md2-fda1536/
+ 1300  l
+ 1301  antechamber -i fda1536-exhaus.mol2 -o fda.mol2 -fi mol2 -fo mol2 -c bcc
+ 1302  acpype -di fda.mol2 -c bcc
+ 1303  gmx pdb2gmx -f tc10_remove-tail-LRG.pdb -o pro.gro -ignh
+ 1304  clear
+ 1305  source /usr/local/gromacs/bin/GMXRC
+ 1306  gmx pdb2gmx -f tc10_remove-tail-LRG.pdb -o pro.gro -ignh
+ 1307  gmx editconf -f fda_NEW.pdb -o fda.gro
+ 1308  gmx editconf -f cpx.gro -o box.gro -bt dodecahedron -d 1.0
+ 1309  gmx solvate -cp box.gro -cs spc216.gro -p topol.top -o sol.gro
+ 1310  gmx grompp -f ions.mdp -c sol.gro -p topol.top -o ions.tpr -maxwarn 1
+ 1311  gmx genion -s ions.tpr -o ions.gro -p topol.top -pname NA -nname CL -neutral
+ 1312  gmx grompp -f em-steep.mdp -c ions.gro -p topol.top -o em-steep.tpr
+ 1313  gmx mdrun -v -deffnm em-steep
+ 1314  gmx energy -f em-steep.edr -o potential.xvg
+ 1315  xmgrace potential.xvg 
+ 1316  gmx make_ndx -f fda.gro -o fda.ndx
+ 1317  gmx genrestr -f fda.gro -n fda.ndx -o posre_fda.itp -fc 1000 1000 1000
+ 1318  xmgrace potential.xvg 
+ 1319  gmx pdb2gmx -f tc10_remove-tail-LRG.pdb -o pro.gro -ignh
+ 1320  cd gmx_amber/md_ub75/rmsd/
+ 1321  xmgrace rmsd-1065.xvg rmsd_755-npt1-100ns.xvg 
+ 1322  cd gmx_amber/md_ub75/rmsd/
+ 1323  xmgrace rmsd_755.xvg rmsd_1065.xvg 
+ 1324  xmgrace rmsd_1536.xvg rmsd_755.xvg rmsd_1076.xvg rmsd_1065.xvg 
+ 1325  history
+ 1326  cd gmx_amber/md_ub75/1065/
+ 1327  l
+ 1328  antechamber -i fda1065-ex.mol2 -o fda.mol2 -fi mol2 -fo mol2 -c bcc
+ 1329  antechamber -i fda1065-a.mol2 -o fda.mol2 -fi mol2 -fo mol2 -c bcc
+ 1330  acpype -di fda.mol2 -c bcc
+ 1331  gmx pdb2gmx -f tc10_remove-tail-LRG.pdb -o pro.gro -ignh
+ 1332  source /usr/local/gromacs/bin/GMXRC
+ 1333  gmx pdb2gmx -f tc10_remove-tail-LRG.pdb -o pro.gro -ignh
+ 1334  gmx editconf -f fda_NEW.pdb -o fda.gro
+ 1335  antechamber -i fda1065-a.mol2 -o fda.mol2 -fi mol2 -fo mol2 -c bcc
+ 1336  acpype -di fda.mol2 -c bcc
+ 1337  gmx editconf -f fda_NEW.pdb -o fda.gro
+ 1338  gmx editconf -f cpx.gro -o box.gro -bt dodecahedron -d 1.0
+ 1339  gmx solvate -cp box.gro -cs spc216.gro -p topol.top -o sol.gro
+ 1340  gmx grompp -f ions.mdp -c sol.gro -p topol.top -o ions.tpr -maxwarn 1
+ 1341  gmx editconf -f cpx.gro -o box.gro -bt dodecahedron -d 1.0
+ 1342  gmx solvate -cp box.gro -cs spc216.gro -p topol.top -o sol.gro
+ 1343  gmx grompp -f ions.mdp -c sol.gro -p topol.top -o ions.tpr -maxwarn 1
+ 1344  gmx editconf -f cpx.gro -o box.gro -bt dodecahedron -d 1.0
+ 1345  gmx solvate -cp box.gro -cs spc216.gro -p topol.top -o sol.gro
+ 1346  l
+ 1347  gmx pdb2gmx -f tc10_remove-tail-LRG.pdb -o pro.gro -ignh
+ 1348  gmx editconf -f cpx.gro -o box.gro -bt dodecahedron -d 1.0
+ 1349  gmx solvate -cp box.gro -cs spc216.gro -p topol.top -o sol.gro
+ 1350  gmx grompp -f ions.mdp -c sol.gro -p topol.top -o ions.tpr -maxwarn 1
+ 1351  gmx genion -s ions.tpr -o ions.gro -p topol.top -pname NA -nname CL -neutral
+ 1352  gmx grompp -f em-steep.mdp -c ions.gro -p topol.top -o em-steep.tpr
+ 1353  gmx mdrun -v -deffnm em-steep
+ 1354  gmx energy -f em-steep.edr -o pot.xvg
+ 1355  xmgrace pot.xvg 
+ 1356  gmx make_ndx -f fda.gro -o fda.ndx
+ 1357  gmx genrestr -f fda.gro -n fda.ndx -o posre_fda.itp -fc 1000 1000 1000
+ 1358  gmx make_ndx -f em-steep.gro -o index.ndx
+ 1359  gmx grompp -f nvt.mdp -c em-steep.gro -r em-steep.gro -p topol.top -n index.ndx -o nvt.tpr
+ 1360  gmx mdrun -v -deffnm nvt
+ 1361  gmx grompp -f npt-1.mdp -c nvt.gro -t nvt.cpt -r nvt.gro -p topol.top -n index.ndx -o npt-1.tpr
+ 1362  gmx mdrun -v -deffnm npt-1
+ 1363  gmx grompp -f md_50.mdp -c npt-1.gro -t npt-1.cpt -p topol.top -n index.ndx -o md_50.tpr
+ 1364  gmx mdrun -v -deffnm md_50
+ 1365  l
+ 1366  gmx make_ndx -f em-steep.gro -o chain_a.ndx
+ 1367  gmx trjconv -f md_50.xtc -s md_50.tpr -o md_50-n.xtc -center -pbc mol -ur compact -n chain_a.ndx
+ 1368  gmx rms -s md_50.tpr -f md_50-n.xtc -o rmsd-1065.xvg -tu ns
+ 1369  xmgrace rmsd-1065.xvg 
+ 1370  gmx convert-tpr -s md_50.tpr -extend 50000 -o md_100.tpr
+ 1371  gmx mdrun -v -deffnm md_100 -cpi md_50.cpt -noappend
+ 1372  gmx trjcat -f md_50.xtc md_100.part0002.xtc -o md_50_100.xtc
+ 1373  gmx trjconv -f md_50_100.xtc -s md_100.tpr -o md_100-n.xtc -center -pbc mol -ur compact -n chain_a.ndx
+ 1374  gmx rms -s md_100.tpr -f md_100-n.xtc -o rmsd_1065.xvg -tu ns
+ 1375  xmgrace rmsd_1065.xvg 
+ 1376  gmx trjconv -s md_100.tpr -f md_100-n.xtc -o 100ns.pdb -dump 100000
+ 1377  gmx trjconv -s md_100.tpr -f md_100-n.xtc -o 0ns.pdb -dump 0
+ 1378  cd ..
+ 1379  cd 854/
+ 1380  antechamber -i fda854-b.mol2 -o fda.mol2 -fi mol2 -fo mol2 -c bcc
+ 1381  antechamber -i fda854-a.mol2 -o fda.mol2 -fi mol2 -fo mol2 -c bcc
+ 1382  acpype -di fda.mol2 -c bcc
+ 1383  gmx pdb2gmx -f tc10_remove-tail-LRG.pdb -o pro.gro -ignh
+ 1384  gmx editconf -f fda_NEW.pdb -o fda.gro
+ 1385  gmx editconf -f cpx.gro -o box.gro -bt dodecahedron -d 1.0
+ 1386  gmx solvate -cp box.gro -cs spc216.gro -p topol.top -o sol.gro
+ 1387  gmx grompp -f ions.mdp -c sol.gro -p topol.top -o ions.tpr -maxwarn 1
+ 1388  gmx genion -s ions.tpr -o ions.gro -p topol.top -pname NA -nname CL -neutral
+ 1389  gmx grompp -f em-steep.mdp -c ions.gro -p topol.top -o em-steep.tpr
+ 1390  gmx mdrun -v -deffnm em-steep
+ 1391  gmx energy -f em-steep.edr -o potential.xvg
+ 1392  xmgrace potential.xvg 
+ 1393  gmx make_ndx -f fda.gro -o fda.ndx
+ 1394  gmx genrestr -f fda.gro -n fda.ndx -o posre_fda.itp -fc 1000 1000 1000
+ 1395  gmx make_ndx -f em-steep.gro -o index.ndx
+ 1396  gmx grompp -f nvt.mdp -c em-steep.gro -r em-steep.gro -p topol.top -n index.ndx -o nvt.tpr
+ 1397  gmx mdrun -v -deffnm nvt
+ 1398  gmx grompp -f npt-1.mdp -c nvt.gro -t nvt.cpt -r nvt.gro -p topol.top -n index.ndx -o npt-1.tpr
+ 1399  gmx mdrun -v -deffnm npt-1
+ 1400  gmx grompp -f md_50.mdp -c npt-1.gro -t npt-1.cpt -p topol.top -n index.ndx -o md_50.tpr
+ 1401  gmx mdrun -v -deffnm md_50
+ 1402  l
+ 1403  gmx make_ndx -f em-steep.gro -o chain_a.ndx
+ 1404  gmx trjconv -f md_50.xtc -s md_50.tpr -o md_50-n.xtc -center -pbc mol -ur compact -n chain_a.ndx
+ 1405  gmx rms -s md_50.tpr -f md_50-n.xtc -o rmsd-854.xvg -tu ns
+ 1406  xmgrace rmsd-854.xvg 
+ 1407  gmx trjconv -s md_50.tpr -f md_50-n.xtc -o 0ns.pdb -dump 0
+ 1408  gmx trjconv -s md_50.tpr -f md_50-n.xtc -o 50ns.pdb -dump 50000
+ 1409  vmd
+ 1410  cd gmx_amber/md_ub75/rmsd/
+ 1411  xmgrace rmsd_1536.xvg rmsd_755.xvg rmsd_1076.xvg rmsd_1065.xvg rmsd_854.xvg 
+ 1412  xmgrace rmsd_1536.xvg
+ 1413  xmgrace rmsd_755.xvg 
+ 1414  xmgrace rmsd_1076.xvg 
+ 1415  xmgrace rmsd_1065.xvg 
+ 1416  xmgrace rmsd_854.xvg 
+ 1417  cd ..
+ 1418  cd hbond/
+ 1419  l
+ 1420  xmgrace hbond-854.xvg 
+ 1421  xmgrace hbond-1076.xvg 
+ 1422  xmgrace hbond-1065.xvg 
+ 1423  xmgrace hbond-1536.xvg 
+ 1424  xmgrace hbond-755.xvg 
+ 1425  vmd
+ 1426  cd gmx_amber/md_ub75/854/
+ 1427  l
+ 1428  source /usr/local/gromacs/bin/GMXRC
+ 1429  gmx convert-tpr -s md_50.tpr -extend 50000 -o md_100.tpr
+ 1430  gmx mdrun -v -deffnm md_100 -cpi md_50.cpt -noappend
+ 1431  gmx trjcat -f md_50.xtc md_100.part0002.xtc -o md_50_100.xtc
+ 1432  gmx trjconv -f md_50_100.xtc -s md_100.tpr -o md_100-n.xtc -center -pbc mol -ur compact -n chain_a.ndx
+ 1433  gmx rms -s md_100.tpr -f md_100-n.xtc -o rmsd_854.xvg -tu ns
+ 1434  xmgrace rmsd_854.xvg 
+ 1435  gmx trjconv -s md_100.tpr -f md_100-n.xtc -o 100ns.pdb -dump 100000
+ 1436  gmx hbond -f md_100-n.xtc -s md_100.tpr -num hbond-854.xvg -tu ns
+ 1437  gmx hbond -f md_100-n.xtc -s md_100.tpr -num hbond-854.xvg -tu ns -n chain_a.ndx 
+ 1438  cd ..
+ 1439  cd 1536/
+ 1440  l
+ 1441  gmx hbond -f md_100-n.xtc -s md_100.tpr -num hbond-1536.xvg -tu ns -n chain_a.ndx 
+ 1442  cd ..
+ 1443  cd 755/
+ 1444  gmx hbond -f md_100-n.xtc -s md_100.tpr -num hbond-1536.xvg -tu ns -n chain_a.ndx 
+ 1445  cd ..
+ 1446  cd 1076/
+ 1447  gmx hbond -f md_100-n.xtc -s md_100.tpr -num hbond-1076.xvg -tu ns -n chain_a.ndx 
+ 1448  cd .
+ 1449  cd ..
+ 1450  cd 1065/
+ 1451  gmx hbond -f md_100-n.xtc -s md_100.tpr -num hbond-1065.xvg -tu ns -n chain_a.ndx 
+ 1452  cd ..
+ 1453  cd 1536/
+ 1454  gmx hbond -f md_100-n.xtc -s md_100.tpr -num hbond-1536.xvg -tu ns -n chain_a.ndx 
+ 1455  cd ..
+ 1456  cd 755/
+ 1457  gmx hbond -f md_100-n.xtc -s md_100.tpr -num hbond-755.xvg -tu ns -n chain_a.ndx 
+ 1458  vmd
+ 1459  fdisk -l
+ 1460  sudo fdisk -l
+ 1461  sudo unmount /dev/sda
+ 1462  sudo umount /dev/sda
+ 1463  sudo -i
+ 1464  sudo mkswap /dev/sda
+ 1465  fdisk -l
+ 1466  sudo fdsik -l
+ 1467  sudo fdiskk -l
+ 1468  sudo fdisk -l
+ 1469  sudo umount /dev/sda2
+ 1470  sudo mkswap /dev/sda2
+ 1471  sudo swapon -p 32767 /dev/sda2
+ 1472  cat /proc/swaps
+ 1473  cd gmx_amber/md_ub75/755/
+ 1474  source /usr/local/gromacs/bin/GMXRC
+ 1475  gmx trjconv -s md_100.tpr -f md_100-n.xtc -o md_100-n.gro -dump 0
+ 1476  sudo swapoff /dev/sda2
+ 1477  vmd
+ 1478  history
+ 1479  sudo swapoff /dev/sda2
+ 1480  sudo swapon -p 32767 /dev/sda2
+ 1481  cat /proc/swaps
+ 1482  cd gmx_amber/md_ub75/755/
+ 1483  source /usr/local/gromacs/bin/GMXRC
+ 1484  gmx trjconv -s md_100.tpr -f md_100-n.xtc -o md_100-n.gro -dump 0
+ 1485  cd ..
+ 1486  cd 1076/
+ 1487  gmx trjconv -s md_100.tpr -f md_100-n.xtc -o md_100-n.gro -dump 0
+ 1488  cd ..
+ 1489  cd 1065/
+ 1490  gmx trjconv -s md_100.tpr -f md_100-n.xtc -o md_100-n.gro -dump 0
+ 1491  cd ..
+ 1492  cd 854/
+ 1493  gmx trjconv -s md_100.tpr -f md_100-n.xtc -o md_100-n.gro -dump 0
+ 1494  cmd
+ 1495  vmd
+ 1496  sudo swapoff /dev/sda2
+ 1497  cd gmx_amber/md_ub75/rmsd/
+ 1498  xmgrace rmsd-1536.xvg rmsd_1536.xvg 
+ 1499  gmx trjconv -s md_50.tpr -f md_50-n.xtc -o 50ns.pdb -dump 50000
+ 1500  xmgrace rmsd-1536.xvg rmsd_1536.xvg 
+ 1501  cd gmx_amber/md_ub75/rmsd/
+ 1502  xmgrace rmsd_1536.xvg rmsd_1536-re.xvg 
+ 1503  cd ..
+ 1504  cd hbond/
+ 1505  xmgrace hbond-1536.xvg 
+ 1506  history
+ 1507  sudo swapon -p 32767 /dev/sda2
+ 1508  sudo swapoff /dev/sda2
+ 1509  vmd
+ 1510  cd gmx_amber/md_ub75/re-simulate/1536/
+ 1511  source /usr/local/gromacs/bin/GMXRC
+ 1512  gmx make_ndx -f em-steep.gro -n fda-hvy.ndx
+ 1513  gmx make_ndx -f em-steep.gro -o fda-hvy.ndx
+ 1514  gmx rms -s em-steep.tpr -f md_100-n.xtc -n fda-hvy.ndx -tu ns -o rmsd_1536-hvy.xvg
+ 1515  xmgrace rmsd_1536-hvy.xvg 
+ 1516  gmx rms -s em-steep.tpr -f md_100-n.xtc -n fda-hvy.ndx -tu ns -o rmsd_1536-hvy.xvg
+ 1517  xmgrace rmsd_1536-hvy.xvg 
+ 1518  gmx hbond -help
+ 1519  gmx hbond -h
+ 1520  cd vs/new/tc10/redock_fda/super\ redocked/
+ 1521  ./vina_screen_local.sh 
+ 1522  cd gmx_amber/ds/755/
+ 1523  antechamber -i 755sr.mol2 -o fda.mol2 -fi mol2 -fo mol2 -c bcc
+ 1524  antechamber -i 755sr-py.mol2 -o fda.mol2 -fi mol2 -fo mol2 -c bcc
+ 1525  history
+ 1526  cd gmx_amber/
+ 1527  l
+ 1528  cd bap1n-ub_ligand_4i6n/
+ 1529  antechamber -i gve.pdb -o fda.mol2 -fi pdb -fo mol2 -c bcc
+ 1530  acpype -di fda.mol2 -c bcc
+ 1531  cd gmx_amber/ds/755/
+ 1532  l
+ 1533  antechamber -i 755sr.mol2 -o fda.mol2 -fi mol2 -fo mol2 -c bcc -j part
+ 1534  antechamber --help
+ 1535  antechamber -h
+ 1536  antechamber -i 755sr.mol2 -o fda.mol2 -fi mol2 -fo mol2 -c bcc -j 5
+ 1537  antechamber -i 755sr.mol2 -o fda.mol2 -fi mol2 -fo mol2 -c bcc -j 3
+ 1538  antechamber -i 755sr.mol2 -o fda.mol2 -fi mol2 -fo mol2 -j 3 -c bcc 
+ 1539  antechamber -h
+ 1540  antechamber -i 755sr.mol2 -o fda.mol2 -fi mol2 -fo mol2 -at bcc -c bcc 
+ 1541  antechamber -i 755sr-py.pdb -o fda.mol2 -fi pdb -fo mol2 -at bcc -c bcc 
+ 1542  antechamber -i 755sr.pdb -o fda.mol2 -fi pdb -fo mol2 -at bcc -c bcc 
+ 1543  acpype -di fda.mol2 -c bcc
+ 1544  source /usr/local/gromacs/bin/GMXRC
+ 1545  gmx pdb2gmx -f tc10_remove-tail-LRG.pdb -o pro.gro -ignh
+ 1546  gmx editconf -f fda_NEW.pdb -o fda.gro
+ 1547  antechamber -i 755sr.pdb -o fda.mol2 -fi pdb -fo mol2 -at bcc -c bcc 
+ 1548  acpype -di fda.mol2 -c bcc
+ 1549  gmx editconf -f fda_NEW.pdb -o fda.gro
+ 1550  gmx pdb2gmx -f tc10_remove-tail-LRG.pdb -o pro.gro -ignh
+ 1551  gmx editconf -f cpx.gro -o box.gro -bt dodecahedron -d 1.0
+ 1552  gmx solvate -cp box.gro -cs spc216.gro -p topol.top -o sol.gro
+ 1553  gmx grompp -f ions.mdp -c sol.gro -p topol.top -o ions.tpr -maxwarn 1
+ 1554  gmx genion -s ions.tpr -o ions.gro -p topol.top -pname NA -nname CL -neutral
+ 1555  gmx grompp -f em-steep.mdp -c ions.gro -p topol.top -o em-steep.tpr
+ 1556  gmx mdrun -v -deffnm em-steep
+ 1557  gmx energy -f em-steep.edr -o pot.xvg
+ 1558  xmgrace pot.xvg
+ 1559  gmx make_ndx -f fda.gro -o fda.ndx
+ 1560  gmx genrestr -f fda.gro -n fda.ndx -o posre_fda.itp -fc 1000 1000 1000
+ 1561  gmx make_ndx -f em-steep.gro -o index.ndx
+ 1562  gmx grompp -f nvt.mdp -c em-steep.gro -r em-steep.gro -p topol.top -n index.ndx -o nvt.tpr
+ 1563  gmx mdrun -v -deffnm nvt
+ 1564  gmx grompp -f npt-1.mdp -c nvt.gro -t nvt.cpt -r nvt.gro -p topol.top -n index.ndx -o npt-1.tpr
+ 1565  gmx mdrun -v -deffnm npt-1
+ 1566  gmx grompp -f md_50.mdp -c npt-1.gro -t npt-1.cpt -p topol.top -n index.ndx -o md_50.tpr
+ 1567  gmx mdrun -v -deffnm md_50
+ 1568  gmx make_ndx -f em-steep.gro -o chain_a.ndx
+ 1569  gmx trjconv -f md_50.xtc -s md_50.tpr -o md_50-n.xtc -center -pbc mol -ur compact -n chain_a.ndx
+ 1570  gmx rms -s md_50.tpr -f md_50-n.xtc -o r-755.xvg -tu ns
+ 1571  xmgrace r-755.xvg 
+ 1572  gmx trjconv -s md_50.tpr -f md_50-n.xtc -o 0ns.pdb -dump 0
+ 1573  gmx trjconv -s md_50.tpr -f md_50-n.xtc -o 50ns.pdb -dump 50000
+ 1574  gmx convert-tpr -s md_50.tpr -extend 50000 -o md_100.tpr
+ 1575  gmx mdrun -v -deffnm md_100 -cpi md_50.cpt -noappend
+ 1576  gmx trjcat -f md_50.xtc md_100.part0002.xtc -o md_50_100.xtc
+ 1577  gmx trjconv -f md_50_100.xtc -s md_100.tpr -o md_100-n.xtc -center -pbc mol -ur compact -n chain_a.ndx
+ 1578  gmx rms -s md_100.tpr -f md_100-n.xtc -o 755.xvg -tu ns
+ 1579  xmgrace 755.xvg 
+ 1580  gmx trjconv -s md_100.tpr -f md_100-n.xtc -o 100ns.pdb -dump 100000
+ 1581  gmx trjconv -s md_100.tpr -f md_100-n.xtc -o 0ns.pdb -dump 0
+ 1582  xmgrace 755.xvg 
+ 1583  gmx hbond -f md_100-n.xtc -s md_100.tpr -num hbond-755.xvg -tu ns -n chain_a.ndx
+ 1584  xmgrace hbond-755.xvg 
+ 1585  cd gmx_amber/ds/755/
+ 1586  xmgrace hbond-755.xvg 
+ 1587  cd gmx_amber/ds/rmsd/
+ 1588  xmgrace 1065.xvg 755.xvg 
+ 1589  xmgrace 1065-hvyatm.xvg 755-hvyatm.xvg 
+ 1590  xmgrace 1065-hvyatm.xvg 1065.xvg 
+ 1591  xmgrace 1065-hvyatm.xvg 755-hvyatm.xvg 
+ 1592  cd gmx_amber/ds/1065/
+ 1593  l
+ 1594  antechamber -i 1065sr.pdb -o fda.mol2 -fi pdb -fo mol2 -at bcc -c bcc
+ 1595  acpype -di fda.mol2 -c bcc
+ 1596  source /usr/local/gromacs/bin/GMXRC
+ 1597  gmx pdb2gmx -f tc10_remove-tail-LRG.pdb -o pro.gro -ignh
+ 1598  gmx editconf -f fda_NEW.pdb -o fda.gro
+ 1599  gmx editconf -f cpx.gro -o box.gro -bt dodecahedron -d 1.0
+ 1600  gmx solvate -cp box.gro -cs spc216.gro -p topol.top -o sol.gro
+ 1601  gmx grompp -f ions.mdp -c sol.gro -p topol.top -o ions.tpr -maxwarn 1
+ 1602  gmx genion -s ions.tpr -o ions.gro -p topol.top -pname NA -nname CL -neutral
+ 1603  gmx grompp -f em-steep.mdp -c ions.gro -p topol.top -o em-steep.tpr
+ 1604  gmx mdrun -v -deffnm em-steep
+ 1605  gmx energy -f em-steep.edr -o pot.xvg
+ 1606  xmgrace pot.xvg
+ 1607  gmx make_ndx -f fda.gro -o fda.ndx
+ 1608  gmx genrestr -f fda.gro -n fda.ndx -o posre_fda.itp -fc 1000 1000 1000
+ 1609  gmx make_ndx -f em-steep.gro -o index.ndx
+ 1610  gmx grompp -f nvt.mdp -c em-steep.gro -r em-steep.gro -p topol.top -n index.ndx -o nvt.tpr
+ 1611  gmx mdrun -v -deffnm nvt
+ 1612  gmx grompp -f npt-1.mdp -c nvt.gro -t nvt.cpt -r nvt.gro -p topol.top -n index.ndx -o npt-1.tpr
+ 1613  gmx mdrun -v -deffnm npt-1
+ 1614  gmx grompp -f md_50.mdp -c npt-1.gro -t npt-1.cpt -p topol.top -n index.ndx -o md_50.tpr
+ 1615  gmx mdrun -v -deffnm md_50
+ 1616  gmx make_ndx -f em-steep.gro -o chain_a.ndx
+ 1617  gmx trjconv -f md_50.xtc -s md_50.tpr -o md_50-n.xtc -center -pbc mol -ur compact -n chain_a.ndx
+ 1618  gmx rms -s md_50.tpr -f md_50-n.xtc -o r-1065.xvg -tu ns
+ 1619  xmgrace r-1065.xvg 
+ 1620  gmx trjconv -s md_50.tpr -f md_50-n.xtc -o 0ns.pdb -dump 0
+ 1621  gmx trjconv -s md_50.tpr -f md_50-n.xtc -o 50ns.pdb -dump 50000
+ 1622  gmx convert-tpr -s md_50.tpr -extend 50000 -o md_100.tpr
+ 1623  gmx mdrun -v -deffnm md_100 -cpi md_50.cpt -noappend
+ 1624  gmx trjcat -f md_50.xtc md_100.part0002.xtc -o md_50_100.xtc
+ 1625  gmx trjconv -f md_50_100.xtc -s md_100.tpr -o md_100-n.xtc -center -pbc mol -ur compact -n chain_a.ndx
+ 1626  gmx rms -s md_100.tpr -f md_100-n.xtc -o 1065.xvg -tu ns
+ 1627  xmgrace 1065.xvg 
+ 1628  gmx trjconv -s md_100.tpr -f md_100-n.xtc -o 0ns.pdb -dump 0
+ 1629  gmx trjconv -s md_100.tpr -f md_100-n.xtc -o 100ns.pdb -dump 100000
+ 1630  xmgrace 1065.xvg 
+ 1631  gmx make_ndx -f em-steep.gro -o fda-hvyatm.ndx
+ 1632  gmx rms -s md_100.tpr -f md_100-n.xtc -o 1065.xvg -tu ns -n fda-hvyatm.ndx 
+ 1633  xmgrace 1065.xvg 
+ 1634  cd ..
+ 1635  cd 755/
+ 1636  gmx make_ndx -f em-steep.gro -o fda-hvyatm.ndx
+ 1637  gmx rms -s md_100.tpr -f md_100-n.xtc -o 755-hvyatm.xvg -tu ns -n fda-hvyatm.ndx 
+ 1638  cd ..
+ 1639  cd 1065/
+ 1640  gmx hbond -f md_100-n.xtc -s md_100.tpr -num hbond-1065.xvg -tu ns -n chain_a.ndx
+ 1641  xmgrace hbond-1065.xvg 
+ 1642  history 
+ 1643  cd gmx_amber/ds/rmsd/
+ 1644  l
+ 1645  xmgrace 1065.xvg 
+ 1646  xmgrace 755.xvg 
+ 1647  grace -nxy 755.xvg -hdevice PNG -hardcopy -printfile rmsd-0ns100ns-1065-755.png
+ 1648  xmgrace 755.xvg 
+ 1649  grace -nxy 755.xvg -hdevice PNG -hardcopy -printfile rmsd-0ns100ns-1065-755.png
+ 1650  cd gmx_amber/ds/rmsd/
+ 1651  xmgrace 1065.xvg 755.xvg
+ 1652  cd gmx_amber/ds/1065/
+ 1653  l
+ 1654  cd ..
+ 1655  l
+ 1656  cd 1065/
+ 1657  source /usr/local/gromacs/bin/GMXRC
+ 1658  gmx editconf -f cpx.gro -o bap1n-1065-vina.pdb
+ 1659  cd ..
+ 1660  cd 755/
+ 1661  gmx editconf -f cpx.gro -o bap1n-755-vina.pdb
+ 1662  cd 1\ run/
+ 1663  gmx editconf -f cpx.gro -o bap1n-755-vina.pdb
+ 1664  history
+ 1665  cd gmx_amber/ds/755/1\ run/
+ 1666  l
+ 1667  source /usr/local/gromacs/bin/GMXRC
+ 1668  gmx trjconv -s md_100.tpr -f md_100-n.xtc -o 25ns.pdb -dump 25000
+ 1669  gmx trjconv -s md_100.tpr -f md_100-n.xtc -o 75ns.pdb -dump 75000
+ 1670  cd ..
+ 1671  cd 1065/
+ 1672  l
+ 1673  gmx trjconv -s md_100.tpr -f md_100-n.xtc -o 25ns.pdb -dump 25000
+ 1674  gmx trjconv -s md_100.tpr -f md_100-n.xtc -o 75ns.pdb -dump 75000
+ 1675  cd iBAP-ii_Project/
+ 1676  ./vina_screen_local.sh 
+ 1677  cd gmx_amber/ds/rmsd/
+ 1678  xmgrace 755.xvg 
+ 1679  grace -nxy 755.xvg -hdevice PNG -hardcopy -printfile rmsd-755.png
+ 1680  grace -nxy 1065.xvg -hdevice PNG -hardcopy -printfile rmsd-10655.png
+ 1681  grace -nxy 755.xvg -hdevice PNG -hardcopy -printfile rmsd-755.png
+ 1682  grace -nxy 1065.xvg -hdevice PNG -hardcopy -printfile rmsd-10655.png
+ 1683  history
+ 1684  historyhistory
+ 1685  history
+ 1686  cd gmx_amber/md_ub75/bap1n-2ndrun/
+ 1687  l
+ 1688  source /usr/local/gromacs/bin/GMXRC
+ 1689  gmx pdb2gmx -f cl8.pdb -o pro.gro -ignh
+ 1690  l
+ 1691  gmx editconf -f pro.gro -o box.gro -bt dodecahedron -d 1.0
+ 1692  gmx solvate -cp box.gro -cs spc216.gro -p topol.top -o sol.gro
+ 1693  gmx grompp -f ions.mdp -c sol.gro -p topol.top -o ions.tpr -maxwarn 1
+ 1694  gmx genion -s ions.tpr -o ions.gro -p topol.top -pname NA -nname CL -neutral
+ 1695  l
+ 1696  gmx grompp -f em-steep.mdp -c ions.gro -p topol.top -o em-steep.tpr
+ 1697  gmx mdrun -v -deffnm em-steep
+ 1698  gmx make_ndx -f em-nj.gro -o index.ndx
+ 1699  l
+ 1700  gmx make_ndx -f em-steep.gro -o index.ndx
+ 1701  l
+ 1702  gmx grompp -f nvt.mdp -c em-steep.gro -r em-steep.gro -p topol.top -o nvt.tpr
+ 1703  gmx mdrun -v -deffnm nvt
+ 1704  gmx grompp -f npt-1.mdp -c nvt.gro -t nvt.cpt -r nvt.gro -p topol.top -o npt-1.tpr
+ 1705  gmx mdrun -v -deffnm npt-1
+ 1706  gmx grompp -f md_50.mdp -c npt-1.gro -t npt-1.cpt -p topol.top -o md_50.tpr
+ 1707  gmx mdrun -v -deffnm md_50
+ 1708  history
+ 1709  source /usr/local/gromacs/bin/GMXRC
+ 1710  cd gmx_amber/md_ub75/bap1n-noub-2ndrun/
+ 1711  l
+ 1712  gmx pdb2gmx -f cl8.pdb -o pro.gro -ignh
+ 1713  gmx pdb2gmx -f bap1n.pdb -o pro.gro -ignh
+ 1714  gmx editconf -f pro.gro -o box.gro -bt dodecahedron -d 1.0
+ 1715  gmx solvate -cp box.gro -cs spc216.gro -p topol.top -o sol.gro
+ 1716  gmx grompp -f ions.mdp -c sol.gro -p topol.top -o ions.tpr -maxwarn 1
+ 1717  gmx genion -s ions.tpr -o ions.gro -p topol.top -pname NA -nname CL -neutral
+ 1718  gmx grompp -f em-steep.mdp -c ions.gro -p topol.top -o em-steep.tpr
+ 1719  gmx mdrun -v -deffnm em-steep
+ 1720  gmx grompp -f nvt.mdp -c em-steep.gro -r em-steep.gro -p topol.top -o nvt.tpr
+ 1721  gmx mdrun -v -deffnm nvt
+ 1722  gmx grompp -f npt-1.mdp -c nvt.gro -t nvt.cpt -r nvt.gro -p topol.top -o npt-1.tpr
+ 1723  gmx mdrun -v -deffnm npt-1
+ 1724  gmx grompp -f md_50.mdp -c npt-1.gro -t npt-1.cpt -p topol.top -o md_50.tpr
+ 1725  gmx mdrun -v -deffnm md_50
+ 1726  cd gmx_amber/md_ub75/bap1n-2ndrun/
+ 1727  l
+ 1728  gmx make_ndx -f em-steep.gro -o chain_a.ndx
+ 1729  source /usr/local/gromacs/bin/GMXRC
+ 1730  gmx make_ndx -f em-steep.gro -o chain_a.ndx
+ 1731  gmx trjconv -f md_50.xtc -s md_50.tpr -o md_50-n.xtc -center -pbc mol -ur compact -n chain_a.ndx
+ 1732  gmx rms -s md_50.tpr -f md_50-n.xtc -o rmsd-bap1n2ndrun.xvg -tu ns
+ 1733  l
+ 1734  xmgrace rmsd-bap1n2ndrun.xvg 
+ 1735  gmx trjconv -s md_50.tpr -f md_50-n.xtc -o 0ns.pdb -dump 0
+ 1736  gmx trjconv -s md_50.tpr -f md_50-n.xtc -o 100ns.pdb -dump 100000
+ 1737  xmgrace rmsd-bap1n2ndrun.xvg 
+ 1738  gmx rms -s md_50.tpr -f md_50-n.xtc -o rmsd-bap1n2ndrun.xvg -tu ns
+ 1739  gmx rms -s md_50.tpr -f md_50-n.xtc -o rmsd-bap1n2ndrun.xvg -tu ns -n chain_a.ndx 
+ 1740  xmgrace rmsd-bap1n2ndrun.xvg 
+ 1741  cd ..
+ 1742  cd bap1n-noub-2ndrun/
+ 1743  gmx make_ndx -f em-steep.gro -o chain_a.ndx
+ 1744  gmx trjconv -f md_50.xtc -s md_50.tpr -o md_50-n.xtc -center -pbc mol -ur compact -n chain_a.ndx
+ 1745  gmx trjconv -s md_50.tpr -f md_50-n.xtc -o 100ns.pdb -dump 100000
+ 1746  gmx rms -s md_50.tpr -f md_50-n.xtc -o rmsd-bap1n-noub-2ndrun.xvg -tu ns -n chain_a.ndx 
+ 1747  xmgrace rmsd-bap1n-noub-2ndrun.xvg 
+ 1748  histrory
+ 1749  history
+ 1750  cd gmx_amber/ds/1065-2ndrun/
+ 1751  antechamber -i 1065sr.pdb -o fda.mol2 -fi pdb -fo mol2 -at bcc -c bcc
+ 1752  acpype -di fda.mol2 -c bcc
+ 1753  source /usr/local/gromacs/bin/GMXRC
+ 1754  gmx pdb2gmx -f tc10_remove-tail-LRG.pdb -o pro.gro -ignh
+ 1755  gmx editconf -f fda_NEW.pdb -o fda.gro
+ 1756  gmx editconf -f cpx.gro -o box.gro -bt dodecahedron -d 1.0
+ 1757  gmx solvate -cp box.gro -cs spc216.gro -p topol.top -o sol.gro
+ 1758  gmx grompp -f ions.mdp -c sol.gro -p topol.top -o ions.tpr -maxwarn 1
+ 1759  gmx genion -s ions.tpr -o ions.gro -p topol.top -pname NA -nname CL -neutral
+ 1760  gmx grompp -f em-steep.mdp -c ions.gro -p topol.top -o em-steep.tpr
+ 1761  gmx mdrun -v -deffnm em-steep
+ 1762  gmx make_ndx -f fda.gro -o fda.ndx
+ 1763  gmx genrestr -f fda.gro -n fda.ndx -o posre_fda.itp -fc 1000 1000 1000
+ 1764  gmx make_ndx -f em-steep.gro -o index.ndx
+ 1765  gmx grompp -f nvt.mdp -c em-steep.gro -r em-steep.gro -p topol.top -n index.ndx -o nvt.tpr
+ 1766  gmx mdrun -v -deffnm nvt
+ 1767  gmx grompp -f npt-1.mdp -c nvt.gro -t nvt.cpt -r nvt.gro -p topol.top -n index.ndx -o npt-1.tpr
+ 1768  gmx mdrun -v -deffnm npt-1
+ 1769  gmx grompp -f md_50.mdp -c npt-1.gro -t npt-1.cpt -p topol.top -n index.ndx -o md_50.tpr
+ 1770  gmx mdrun -v -deffnm md_50
+ 1771  history
+ 1772  cd gmx_amber/ds/755-2ndrun/
+ 1773  antechamber -i 755sr.pdb -o fda.mol2 -fi pdb -fo mol2 -at bcc -c bcc
+ 1774  acpype -di fda.mol2 -c bcc
+ 1775  source /usr/local/gromacs/bin/GMXRC
+ 1776  gmx pdb2gmx -f tc10_remove-tail-LRG.pdb -o pro.gro -ignh
+ 1777  gmx editconf -f fda_NEW.pdb -o fda.gro
+ 1778  gmx editconf -f cpx.gro -o box.gro -bt dodecahedron -d 1.0
+ 1779  gmx solvate -cp box.gro -cs spc216.gro -p topol.top -o sol.gro
+ 1780  gmx grompp -f ions.mdp -c sol.gro -p topol.top -o ions.tpr -maxwarn 1
+ 1781  gmx genion -s ions.tpr -o ions.gro -p topol.top -pname NA -nname CL -neutral
+ 1782  gmx grompp -f em-steep.mdp -c ions.gro -p topol.top -o em-steep.tpr
+ 1783  gmx mdrun -v -deffnm em-steep
+ 1784  gmx make_ndx -f fda.gro -o fda.ndx
+ 1785  gmx genrestr -f fda.gro -n fda.ndx -o posre_fda.itp -fc 1000 1000 1000
+ 1786  gmx make_ndx -f em-steep.gro -o index.ndx
+ 1787  gmx grompp -f nvt.mdp -c em-steep.gro -r em-steep.gro -p topol.top -n index.ndx -o nvt.tpr
+ 1788  gmx mdrun -v -deffnm nvt
+ 1789  gmx grompp -f npt-1.mdp -c nvt.gro -t nvt.cpt -r nvt.gro -p topol.top -n index.ndx -o npt-1.tpr
+ 1790  gmx mdrun -v -deffnm npt-1
+ 1791  gmx grompp -f md_50.mdp -c npt-1.gro -t npt-1.cpt -p topol.top -n index.ndx -o md_50.tpr
+ 1792  gmx mdrun -v -deffnm md_50
+ 1793  conda env lsit
+ 1794  conda env list
+ 1795  conda list
+ 1796  conda create --name gmxmmpbsa python=3.9 -y -q
+ 1797  conda env list
+ 1798  conda activate gmxmmpbsa
+ 1799  conda list
+ 1800  conda install -c conda-forge mpi4py=3.1.3 ambertools=21.12 compilers -y -q
+ 1801  conda deactivate
+ 1802  conda env list
+ 1803  conda env remove --name AmberTools21
+ 1804  conda env list
+ 1805  conda activate gmxmmpbsa
+ 1806  conda install -c conda-forge mpi4py=3.1.3 ambertools=21.12 compilers -y -q
+ 1807  conda install anaconda-clean
+ 1808  conda list
+ 1809  conda env list
+ 1810  conda install anaconda-clean
+ 1811  conda update conda
+ 1812  conda
+ 1813  conda list
+ 1814  conda env list
+ 1815  conda remove env gmxmmpbsa
+ 1816  conda remove env -n gmxmmpbsa
+ 1817  conda env remove -n gmx_amber/
+ 1818  conda env remove -n gmxmmpbsa
+ 1819  conda env list
+ 1820  conda update conda
+ 1821  conda install anaconda-clean
+ 1822  anaconda-clean --yes
+ 1823  conda anaconda-clean --yes
+ 1824  anaconda-clean --yes
+ 1825  anaconda-clean 
+ 1826  conda init
+ 1827  source /home/md1uitm/anaconda3/bin/activate
+ 1828  anaconda-clean 
+ 1829  conda list
+ 1830  rm -rf ~/anaconda3
+ 1831  conda
+ 1832  conda liat
+ 1833  gedit .bashrc
+ 1834  conda
+ 1835  ls anaconda3
+ 1836  source .bashrc
+ 1837  cd Downloads/
+ 1838  ls
+ 1839  bash Miniconda3-py39_4.12.0-Linux-x86_64.sh 
+ 1840  conda create -n gmxmmpbsa pyhton=3.9
+ 1841  conda create -n gmxmmpbsa python=3.9
+ 1842  conda env lsit
+ 1843  conda env list
+ 1844  conda activate gmxmmpbsa
+ 1845  conda install -c conda-forge acpype
+ 1846  acpype
+ 1847  conda install -c conda-forge mpi4py=3.1.3 ambertools=21.12 compilers
+ 1848  python
+ 1849  python -m pip install git+https://github.com/Valdes-Tresanco-MS/ParmEd.git@v3.4
+ 1850  sudo apt install git
+ 1851  sudo apt update
+ 1852  python -m pip install git+https://github.com/Valdes-Tresanco-MS/ParmEd.git@v3.4
+ 1853  python -m pip install pyqt5
+ 1854  python -m pip install gmx_MMPBSA
+ 1855  python -m pip install gmx_MMPBSA -U
+ 1856  gmxmmpbsa -h
+ 1857  gmx_MMPBSA -h
+ 1858  conda deactivate
+ 1859  gmx_MMPBSA -h
+ 1860  conda activate gmxmmpbsa
+ 1861  conda rename -n gmxmmpbsa -d acpypemmpbsa
+ 1862  acpype
+ 1863  conda create --name acpypemmpbsa --clone gmxmmpbsa
+ 1864  conda env list
+ 1865  conda deactivate
+ 1866  conda remove --name gmxmmpbsa --all
+ 1867  conda env list
+ 1868  conda activate acpypemmpbsa
+ 1869  clear
+ 1870  history
+ 1871  source /usr/local/gromacs/bin/GMXRC
+ 1872  gmx pdb2gmx
+ 1873  history
+ 1874  set nonumber
+ 1875  history
+ 1876  conda env list
+ 1877  conda activate acpypemmpbsa
+ 1878  antechamber
+ 1879  gmx_MMPBSA -h
+ 1880  source /usr/local/gromacs/bin/GMXRC
+ 1881  cd gmx_amber/
+ 1882  l
+ 1883  cd ds/
+ 1884  l
+ 1885  cd 755
+ 1886  l
+ 1887  cd 1\ run/
+ 1888  l
+ 1889  gmx make_ndx -f em-steep.gro -o index_test.ndx
+ 1890  l
+ 1891  cd ..
+ 1892  l
+ 1893  cd gmx_MMPBSA/
+ 1894  l
+ 1895  cd fda755/
+ 1896  l
+ 1897  conda env list
+ 1898  conda acpypemmpbsa
+ 1899  conda activate acpypemmpbsa
+ 1900  l
+ 1901  gmx_MMPBSA -h
+ 1902  gmx_MMPBSA -O -i mmpbsa.in -cs com.tpr -ci index.ndx -cg 1 13 -ct com_traj.xtc -lm ligand.mol2 -o FINAL_RESULTS_MMPBSA.dat -eo FINAL_RESULTS_MMPBSA.csv
+ 1903  history
+ 1904  clear
+ 1905  gmx_MMPBSA -O -i mmpbsa.in -cs com.tpr -ci index.ndx -cg 1 13 -ct com_traj.xtc -lm ligand.mol2 -o FINAL_RESULTS_MMPBSA.dat -eo FINAL_RESULTS_MMPBSA.csv
+ 1906  gmx_MMPBSA -O -i mmpbsa.in -cs com.tpr -ci index.ndx -cg 1 13 -ct com_traj.xtc -lm ligand.mol2 -cp topol.top -o FINAL_RESULTS_MMPBSA.dat -eo FINAL_RESULTS_MMPBSA.csv
+ 1907  gmx_MMPBSA -O -i mmpbsa.in -cs com.tpr -ci index.ndx -cg 1 13 -ct com_traj.xtc -lm fda.mol2 -cp topol.top -o FINAL_RESULTS_MMPBSA.dat -eo FINAL_RESULTS_MMPBSA.csv
+ 1908  gmx_MMPBSA -O -i mmpbsa.in -cs com.tpr -ci index.ndx -cg 1 13 -ct com_traj.xtc -lm 755sr.pdb -cp topol.top -o FINAL_RESULTS_MMPBSA.dat -eo FINAL_RESULTS_MMPBSA.csv
+ 1909  gmx_MMPBSA -O -i mmpbsa.in -cs com.tpr -ci index.ndx -cg 1 13 -ct com_traj.xtc -lm 755sr.mol2 -cp topol.top -o FINAL_RESULTS_MMPBSA.dat -eo FINAL_RESULTS_MMPBSA.csv
+ 1910  antechamber 
+ 1911  gmx_MMPBSA -O -i mmpbsa.in -cs com.tpr -ci index.ndx -cg 1 13 -ct com_traj.xtc -lm ligand.mol2 -cp topol.top -o FINAL_RESULTS_MMPBSA.dat -eo FINAL_RESULTS_MMPBSA.csv
+ 1912  gmx_MMPBSA -O -i mmpbsa.in -cs com.tpr -ci index.ndx -cg 1 13 -ct com_traj.xtc -lm ligand.mol2 -o FINAL_RESULTS_MMPBSA.dat -eo FINAL_RESULTS_MMPBSA.csv
+ 1913  cd ..
+ 1914  cd fda1065/
+ 1915  l
+ 1916  gmx_MMPBSA -O -i mmpbsa.in -cs com.tpr -ci index.ndx -cg 1 13 -ct com_traj.xtc -lm ligand.mol2 -o FINAL_RESULTS_MMPBSA.dat -eo FINAL_RESULTS_MMPBSA.csv
+ 1917  cd ..
+ 1918  cd fda755-2nd\ run/
+ 1919  gmx_MMPBSA -O -i mmpbsa.in -cs com.tpr -ci index.ndx -cg 1 13 -ct com_traj.xtc -lm ligand.mol2 -o FINAL_RESULTS_MMPBSA.dat -eo FINAL_RESULTS_MMPBSA.csv
+ 1920  cd ..
+ 1921  l
+ 1922  pwd
+ 1923  cd /
+ 1924  l
+ 1925  cd gmx_amber/gmx_MMPBSA/fda755-0-100ns/
+ 1926  l
+ 1927  conda activate acpypemmpbsa
+ 1928  gmx_MMPBSA -O -i mmpbsa.in -cs com.tpr -ci index.ndx -cg 1 13 -ct com_traj.xtc -lm ligand.mol2 -o FINAL_RESULTS_MMPBSA.dat -eo FINAL_RESULTS_MMPBSA.csv
+ 1929  source /usr/local/gromacs/bin/GMXRC
+ 1930  gmx_MMPBSA -O -i mmpbsa.in -cs com.tpr -ci index.ndx -cg 1 13 -ct com_traj.xtc -lm ligand.mol2 -o FINAL_RESULTS_MMPBSA.dat -eo FINAL_RESULTS_MMPBSA.csv
+ 1931  conda activate acpypemmpbsa
+ 1932  cd gmx_amber/gmx_MMPBSA/fda755-0-100ns/
+ 1933  l
+ 1934  source /usr/local/gromacs/bin/GMXRC
+ 1935  mpirun -np 2 MPI gmx_MMPBSA -O -i mmpbsa.in -cs com.tpr -ci index.ndx -cg 1 13 -ct com_traj.xtc -lm ligand.mol2 -o FINAL_RESULTS_MMPBSA.dat -eo FINAL_RESULTS_MMPBSA.csv
+ 1936  gmx_MMPBSA -O -i mmpbsa.in -cs com.tpr -ci index.ndx -cg 1 13 -ct com_traj.xtc -lm ligand.mol2 -o FINAL_RESULTS_MMPBSA.dat -eo FINAL_RESULTS_MMPBSA.csv
+ 1937  history
+ 1938  cd ..
+ 1939  l
+ 1940  cd ds
+ 1941  l
+ 1942  755-2ndrun/
+ 1943  l
+ 1944  cd 755-2ndrun/
+ 1945  l
+ 1946  gmx trjconv -f md_50.xtc -s md_50.tpr -o md_50-n.xtc -center -pbc mol -ur compact -n chain_a.ndx
+ 1947  history
+ 1948  gmx trjconv -s md_50.tpr -f md_50-n.xtc -o 0ns.pdb -dump 0
+ 1949  cd ..
+ 1950  cd gmx_MMPBSA/
+ 1951  cd 755-2run/
+ 1952  gmx_MMPBSA -O -i mmpbsa.in -cs com.tpr -ci index.ndx -cg 1 13 -ct com_traj.xtc -lm ligand.mol2 -o FINAL_RESULTS_MMPBSA.dat -eo FINAL_RESULTS_MMPBSA.csv
+ 1953  cd ..
+ 1954  cd ds/
+ 1955  l
+ 1956  cd 1065-2ndrun/
+ 1957  l
+ 1958  gmx trjconv -f md_50.xtc -s md_50.tpr -o md_50-n.xtc -center -pbc mol -ur compact -n chain_a.ndx
+ 1959  gmx trjconv -s md_50.tpr -f md_50-n.xtc -o 0ns.pdb -dump 0
+ 1960  cd ..
+ 1961  cd gmx_MMPBSA/
+ 1962  cd 1065-2run/
+ 1963  l
+ 1964  gmx_MMPBSA -O -i mmpbsa.in -cs com.tpr -ci index.ndx -cg 1 13 -ct com_traj.xtc -lm ligand.mol2 -o FINAL_RESULTS_MMPBSA.dat -eo FINAL_RESULTS_MMPBSA.csv
+ 1965  cd ..
+ 1966  cd decomposition/755/
+ 1967  l
+ 1968  gmx_MMPBSA -O -i mmpbsa.in -cs com.tpr -ci index.ndx -cg 1 13 -ct com_traj.xtc -o FINAL_RESULTS_MMPBSA.dat -eo FINAL_RESULTS_MMPBSA.csv -do FINAL_DECOMP_MMPBSA.dat -deo FINAL_DECOMP_MMPBSA.csv
+ 1969  cd ..
+ 1970  cd 755-2run/
+ 1971  l
+ 1972  gmx_MMPBSA -O -i mmpbsa.in -cs com.tpr -ci index.ndx -cg 1 13 -ct com_traj.xtc -lm ligand.mol2 -o FINAL_RESULTS_MMPBSA.dat -eo FINAL_RESULTS_MMPBSA.csv
+ 1973  cd gmx_amber/gmx_MMPBSA/755-2run/
+ 1974  source /usr/local/gromacs/bin/GMXRC
+ 1975  conda activate acpypemmpbsa
+ 1976  gmx_MMPBSA -O -i mmpbsa.in -cs com.tpr -ci index.ndx -cg 1 13 -ct com_traj.xtc -lm ligand.mol2 -o FINAL_RESULTS_MMPBSA.dat -eo FINAL_RESULTS_MMPBSA.csv
+ 1977  cd ..
+ 1978  cd 1065-2run/
+ 1979  l
+ 1980  gmx_MMPBSA -O -i mmpbsa.in -cs com.tpr -ci index.ndx -cg 1 13 -ct com_traj.xtc -lm ligand.mol2 -o FINAL_RESULTS_MMPBSA.dat -eo FINAL_RESULTS_MMPBSA.csv
+ 1981  source /usr/local/gromacs/bin/GMXRC
+ 1982  conda activate acpypemmpbsa
+ 1983  cd gmx_amber/gmx_MMPBSA/755-2run/
+ 1984  gmx_MMPBSA -O -i mmpbsa.in -cs com.tpr -ci index.ndx -cg 1 13 -ct com_traj.xtc -lm ligand.mol2 -o FINAL_RESULTS_MMPBSA.dat -eo FINAL_RESULTS_MMPBSA.csv
+ 1985  cd ..
+ 1986  cd 1065-2run/
+ 1987  l
+ 1988  gmx_MMPBSA -O -i mmpbsa.in -cs com.tpr -ci index.ndx -cg 1 13 -ct com_traj.xtc -lm ligand.mol2 -o FINAL_RESULTS_MMPBSA.dat -eo FINAL_RESULTS_MMPBSA.csv
+ 1989  source /usr/local/gromacs/bin/GMXRC
+ 1990  conda activate acpypemmpbsa
+ 1991  cd gmx_amber/gmx_MMPBSA/755-2run/
+ 1992  l
+ 1993  gmx_MMPBSA -O -i mmpbsa.in -cs com.tpr -ci index.ndx -cg 1 13 -ct com_traj.xtc -lm ligand.mol2 -o FINAL_RESULTS_MMPBSA.dat -eo FINAL_RESULTS_MMPBSA.csv
+ 1994  cd..
+ 1995  cd ..
+ 1996  cd 1065-2run/
+ 1997  l
+ 1998  gmx_MMPBSA -O -i mmpbsa.in -cs com.tpr -ci index.ndx -cg 1 13 -ct com_traj.xtc -lm ligand.mol2 -o FINAL_RESULTS_MMPBSA.dat -eo FINAL_RESULTS_MMPBSA.csv
+ 1999  pymol
+ 2000  conda env list
+ 2001  ls
+ 2002  cd Desktop/
+ 2003  l
+ 2004  ls
+ 2005  history
+ 2006  history > history.tx
+ 2007  history > history.txt
